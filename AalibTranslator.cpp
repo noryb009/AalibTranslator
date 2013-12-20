@@ -133,7 +133,7 @@ AalibTranslator::DerivedTranslate(BPositionIO *source,
 		}
 		
 		// get half the height and width, rounded up
-		// aalib outputs half the height and width of the original
+		//   aalib outputs half the height and width of the original
 		if(imgWidth%2 == 1)
 			imgHalfWidth = (imgWidth+1)/2;
 		else
@@ -147,16 +147,21 @@ AalibTranslator::DerivedTranslate(BPositionIO *source,
 		// use some custom settings
 		memcpy(&hwparams, &aa_defparams, sizeof(struct aa_hardware_params));
 		hwparams.font = NULL; // default font
-		hwparams.width = imgHalfWidth; // output is half of original width and height
+		// output is half of original width and height
+		hwparams.width = imgHalfWidth;
 		hwparams.height = imgHalfHeight;
 		
-		// new aalib context, use mem_d (memory drive) as we will get the output ourselves
+		// new aalib context
+		//   use mem_d (memory drive) as we will get the output ourselves
 		context = aa_init(&mem_d, &hwparams, NULL);
 		if(context == NULL)
 			return B_ERROR;
 		
-		// we can't use memcpy, as the image width might not be equal to the bytes per row
-		//memcpy(context->imagebuffer, greyscalebmp->Bits(), imgWidth*imgHeight);
+		// we can't use memcpy, as the image width
+		//   might not be equal to the bytes per row
+		/*memcpy(context->imagebuffer,
+				greyscalebmp->Bits(),
+				imgWidth*imgHeight);*/
 		
 		// get the location of the bitmap bits, and the bytes per row
 		unsigned char *bitsLocation = (unsigned char*)greyscalebmp->Bits();
@@ -164,8 +169,9 @@ AalibTranslator::DerivedTranslate(BPositionIO *source,
 		for(int y=0; y<imgHeight; y++) { // for each row and column
 			for(int x=0; x<imgWidth; x++) {
 				// set the pixel
-				// 255- is to invert the greyscale image
-				aa_putpixel(context, x, y, 255-(bitsLocation[y*bytesPerRow+x]));
+				//   255- is to invert the greyscale image
+				aa_putpixel(context, x, y,
+								255-(bitsLocation[y*bytesPerRow+x]));
 			}
 		}
 		
