@@ -92,6 +92,8 @@ AalibTranslator::DerivedIdentify(BPositionIO *source,
 	info->capability = sInputFormats[0].capability;
 	strcpy(info->name, sInputFormats[0].name);
 	strcpy(info->MIME, sInputFormats[0].MIME);
+	
+	delete originalbmp;
 
 	return B_OK;
 }
@@ -190,6 +192,7 @@ AalibTranslator::DerivedTranslate(BPositionIO *source,
 		aa_close(context);
 		free(originalbmp);
 		delete greyscalebmp;
+		delete originalbmp;
 		return B_OK;
 	}
 	return B_NO_TRANSLATOR;
