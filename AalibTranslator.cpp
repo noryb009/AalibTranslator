@@ -27,7 +27,7 @@ static const translation_format sInputFormats[] = {
 		BITS_IN_QUALITY,
 		BITS_IN_CAPABILITY,
 		"image/x-be-bitmap",
-		"Be Bitmap Format (TesseractTranslator)"
+		"Be Bitmap Format"
 	},
 };
 
